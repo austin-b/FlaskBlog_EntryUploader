@@ -2,14 +2,17 @@
 # Local script to upload blog entries (as markdown files)
 # onto my blog site
 #
+# TODO: add tag uploads
 
 import requests
 import argparse
 
+from secret import *
+
 ######## GLOBAL VARIABLES ########
 
 # TODO: change when uploading website
-URL = 'http://192.168.1.242:5000'
+URL = 'https://tabennett.pythonanywhere.com/'
 
 # to denote to the server that this request is coming from me specifically
 HEADERS = {'user-agent': 'tommy/post-uploader'}
@@ -17,7 +20,6 @@ HEADERS = {'user-agent': 'tommy/post-uploader'}
 # TODO: change when uploading website
 # due to my hosts ability to serve my page over HTTPS, the password
 # can be sent in cleartext
-PASSWORD = 'secret'
 
 ######## FUNCTIONS ########
 
@@ -34,7 +36,7 @@ def check_status_code(status_code):
         raise Exception("status code " + str(status_code) + ": discontinuing script")
 
 def login():
-    login_payload = {'password': PASSWORD}
+    login_payload = {'password': ADMIN_PASSWORD}
     login_response = requests.post(URL + '/login/', headers=HEADERS, data=login_payload)
 
     check_status_code(login_response.status_code)
