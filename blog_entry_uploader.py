@@ -13,6 +13,7 @@ from secret import *
 
 # TODO: change when uploading website
 URL = 'https://tabennett.pythonanywhere.com/'
+#URL = 'http://127.0.0.1:5000'
 
 # to denote to the server that this request is coming from me specifically
 HEADERS = {'user-agent': 'tommy/post-uploader'}
@@ -46,7 +47,7 @@ def login():
 
 def upload_file(filename, title, published=False):
     with open(filename, 'rb') as file:
-        files = {'uploaded_file': ('test_file.md', file)}
+        files = {'uploaded_file': file}
         upload_payload = {'title': title, 'published': published}
         upload_response = requests.post(URL + '/upload/', headers=HEADERS, cookies=SESSION_COOKIE, files=files, data=upload_payload)
     check_status_code(upload_response.status_code)
